@@ -2,14 +2,14 @@
 """ Base module
 """
 from datetime import datetime
-from typing import TypeVar, List, Iterable
+from typing import TypeVar, List, Iterable, Dict
 from os import path
 import json
 import uuid
 
 
 TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%S"
-DATA = {}
+DATA: Dict = {}
 
 
 class Base():
@@ -26,7 +26,7 @@ class Base():
         self.id = kwargs.get('id', str(uuid.uuid4()))
         if kwargs.get('created_at') is not None:
             self.created_at = datetime.strptime(kwargs.get('created_at'),
-                                                TIMESTAMP_FORMAT)
+                    TIMESTAMP_FORMAT)  #type: ignore
         else:
             self.created_at = datetime.utcnow()
         if kwargs.get('updated_at') is not None:
