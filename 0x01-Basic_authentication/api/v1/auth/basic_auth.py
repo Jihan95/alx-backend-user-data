@@ -6,7 +6,6 @@ from api.v1.auth.auth import Auth
 from typing import Union, Tuple, TypeVar, Optional
 from models.user import User  # type: ignore
 import base64
-user = TypeVar('User')
 
 
 class BasicAuth(Auth):
@@ -57,7 +56,7 @@ class BasicAuth(Auth):
         return user_name, password
 
     def user_object_from_credentials(
-            self, user_email: str, user_pwd: str) -> Optional[user]:
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
         """
         user object from credentials
         """
@@ -72,3 +71,15 @@ class BasicAuth(Auth):
             if user.is_valid_password(user_pwd):
                 return user
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """
+        retrieve the user
+        """
+        authorization_header = self.authorization_header(request)
+        base64_authorization_header = self.extract_base64_authorization_header(
+                authorization_header)
+        decoded_base64_header = self.decode_base64_authorization_header(
+                base64_authorization_header)
+        user = self.extract_user_credentials(decoded_base64_header)
+        return self.user_object_from_credentials(user[0], user[1])
