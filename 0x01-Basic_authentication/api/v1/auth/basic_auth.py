@@ -3,7 +3,7 @@
 Basic auth
 """
 from api.v1.auth.auth import Auth
-from typing import Union
+from typing import Union, Tuple
 import base64
 
 
@@ -38,3 +38,18 @@ class BasicAuth(Auth):
             return decoded_bytes.decode('utf-8')
         except Exception:
             return None
+
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str) -> Tuple[
+                    Union[None, str], Union[None, str]]:
+        """
+        Extract user cradentials
+        """
+        if decoded_base64_authorization_header is None:
+            return None, None
+        if not isinstance(decoded_base64_authorization_header, str):
+            return None, None
+        if ':' not in decoded_base64_authorization_header:
+            return None, None
+        user_name, password = decoded_base64_authorization_header.split(':')
+        return user_name, password
