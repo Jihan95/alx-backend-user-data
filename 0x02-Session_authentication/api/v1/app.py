@@ -6,6 +6,7 @@ from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
+from api.v1.auth.session_auth import SessionAuth
 import os
 
 
@@ -21,6 +22,9 @@ if env_value == "auth":
 if env_value == "basic_auth":
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
+
+if env_value == "session_auth":
+    auth = SessionAuth()
 
 
 @app.errorhandler(404)
