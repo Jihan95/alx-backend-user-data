@@ -10,6 +10,7 @@ from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
+from typing import Optional
 
 
 class DB:
@@ -56,3 +57,16 @@ class DB:
         except InvalidRequestError as e:
             self._session.rollback()
             raise e
+
+    def update_user(self, user_id, **kwargs):
+        """
+         method that takes as argument a required user_id integer and
+         arbitrary keyword arguments, and returns None
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+            for key, value in kwargs.items():
+                setattr(user, key, value)
+            self._session.commit()
+        except Exception:
+            raise ValueError
