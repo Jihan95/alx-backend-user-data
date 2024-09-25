@@ -52,6 +52,7 @@ class DB:
         try:
             result = self._session.query(User).filter_by(**kwargs).first()
             if result is None:
+                self._session.rollback()
                 raise NoResultFound
             return result
         except InvalidRequestError as e:
