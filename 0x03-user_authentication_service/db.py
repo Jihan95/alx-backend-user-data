@@ -43,7 +43,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """
         This method takes in arbitrary keyword arguments and returns
         the first row found in the users table as filtered
@@ -59,7 +59,7 @@ class DB:
             self._session.rollback()
             raise e
 
-    def update_user(self, user_id, **kwargs):
+    def update_user(self, user_id: int, **kwargs) -> None:
         """
          method that takes as argument a required user_id integer and
          arbitrary keyword arguments, and returns None
