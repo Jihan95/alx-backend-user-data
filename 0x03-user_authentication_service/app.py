@@ -79,8 +79,6 @@ def get_reset_password_token():
     """
     email = request.form.get('email')
     try:
-        session_id = request.cookies.get('session_id')
-        user = AUTH.get_user_from_session_id(session_id)
         reset_token = AUTH.get_reset_password_token(email)
         return jsonify({"email": email, "reset_token": rsest_token}), 200
     except NoResultFound:
