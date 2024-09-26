@@ -9,7 +9,7 @@ from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 
 
-def _hash_password(password):
+def _hash_password(password: str) -> bytes:
     """
          method that takes in a password string arguments and returns bytes.
     """
@@ -25,7 +25,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email, password):
+    def register_user(self, email: str, password: str) -> User:
         """
          take mandatory email and password string arguments and return
          a User object.
