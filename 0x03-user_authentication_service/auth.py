@@ -73,7 +73,7 @@ class Auth:
         except Exception:
             return None
 
-    def get_user_from_session_id(session_id: str) -> Optional(User):
+    def get_user_from_session_id(session_id: str) -> Union[User, None]:
         """
         get user from session id
         """
