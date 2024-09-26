@@ -73,15 +73,14 @@ class Auth:
         except Exception:
             return None
 
-    def get_user_from_session_id(session_id: str) -> Union[User, None]:
+    def get_user_from_session_id(session_id: str) -> User:
         """
         get user from session id
         """
         if session_id is None:
             return None
         try:
-            user = self._db.find_user_by(
-                    session_id=session_id)
+            user = self._db.find_user_by(session_id=session_id)
             return user
         except NoResultFound:
             return None
